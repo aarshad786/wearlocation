@@ -8,6 +8,7 @@ import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -20,7 +21,7 @@ import java.util.Date;
 
 public class WatchActivity extends Activity implements
         GoogleApiClient.ConnectionCallbacks,
-        //GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
     private static final String TAG = "WatchActivity";
@@ -55,7 +56,7 @@ public class WatchActivity extends Activity implements
                 .addApi(LocationServices.API)
                 .addApi(Wearable.API)  // used for data layer API
                 .addConnectionCallbacks(this)
-                //.addOnConnectionFailedListener(this)
+                .addOnConnectionFailedListener(this)
                 .build();
         //mGoogleApiClient.connect();
 
@@ -131,4 +132,9 @@ public class WatchActivity extends Activity implements
         //addLocationEntry(location.getLatitude(), location.getLongitude());
     }
 
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        Log.d(TAG, "connection failed.  result: " + result);
+    }
 }
