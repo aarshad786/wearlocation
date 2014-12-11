@@ -1,6 +1,7 @@
 package me.xbt.wearlocation;
 
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
@@ -42,6 +43,14 @@ public class WatchActivity extends Activity implements
             }
         });
 
+        if (hasGps()) {
+            Log.d(TAG, "this hardware has gps.");
+        } else {
+            Log.d(TAG, "This hardware doesn't have GPS.");
+            // Fall back to functionality that does not use location or
+            // warn the user that location function is not available.
+        }
+
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .addApi(Wearable.API)  // used for data layer API
@@ -58,7 +67,7 @@ public class WatchActivity extends Activity implements
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
-        mGoogleApiClient.connect();
+        mGoogleApiClient.connect(); // remember to connect()
     }
 
     @Override
@@ -70,6 +79,11 @@ public class WatchActivity extends Activity implements
         }
         mGoogleApiClient.disconnect();
     }
+
+    private boolean hasGps() {
+        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS);
+    }
+
 
     @Override
     public void onConnected(Bundle bundle) {
