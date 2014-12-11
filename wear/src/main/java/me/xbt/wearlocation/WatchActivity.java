@@ -104,6 +104,7 @@ public class WatchActivity extends Activity implements
                         if (status.getStatus().isSuccess()) {
                             //if (Log.isLoggable(TAG, Log.DEBUG)) {
                                 Log.d(TAG, "Successfully requested location updates.  status=" + status);
+                                // do something
                             //}
                         } else {
                             Log.e(TAG,
@@ -130,6 +131,7 @@ public class WatchActivity extends Activity implements
         Log.d(TAG, "location changed: " + location);
         mTextView.setText("location changed: " + location + "\ntime: " + new Date());
         //addLocationEntry(location.getLatitude(), location.getLongitude());
+        // do something
     }
 
 
